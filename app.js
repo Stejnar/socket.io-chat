@@ -11,6 +11,7 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', function(socket) {
+    console.log(socket.id);
     socket.on('new user', function(name) {
         if (name === 'Anonymous') {
             name += user.length;
@@ -21,7 +22,7 @@ io.on('connection', function(socket) {
         });
         socket.broadcast.emit('new user', name);
         console.log(name + ' joined the room');
-    })
+    });
     socket.on('disconnect', function() {
         for (var i = 0; i < user.length; i++) {
             if (socket === user[i].socket) {
