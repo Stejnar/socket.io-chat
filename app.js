@@ -11,7 +11,6 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', function(socket) {
-    var socket_room;
     console.log(socket.id);
     socket.on('new user', function(name) {
         if (name === 'Anonymous') {
@@ -25,15 +24,10 @@ io.on('connection', function(socket) {
         console.log(name + ' joined the room');
     });
     socket.on('fetch users request', function(name) {
-        socket_room = name;
-        socket.join(socket_room);
         console.log(name + ' is fetching users');
-        io.sockets.in(name).emit('fetch users received', users);
+        socket.emit('fetch users received', users);
     });
     socket.on('disconnect', function() {
-        if (socket_room) {
-            socket.leave(socket_room);
-        }
         for (var i = 0; i < users.length; i++) {
             if (socket === users[i].socket) {
                 io.emit('user left', users[i].username);
