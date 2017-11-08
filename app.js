@@ -25,7 +25,7 @@ io.on('connection', function(socket) {
     });
     socket.on('fetch users request', function(name) {
         console.log(name + ' is fetching users');
-        socket.emit('fetch users received', users);
+        socket.emit('fetch users received', users.map(function (user) { return user.name; }));
     });
     socket.on('disconnect', function() {
         for (var i = 0; i < users.length; i++) {
