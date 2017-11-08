@@ -24,11 +24,11 @@ io.on('connection', function(socket) {
         socket.broadcast.emit('new user', name);
         console.log(name + ' joined the room');
     });
-    socket.on('fetch users', function(name) {
+    socket.on('fetch users request', function(name) {
         socket_room = name;
         socket.join(socket_room);
         console.log(name + ' is fetching users');
-        io.sockets.in(name).emit('fetch users', users);
+        io.sockets.in(name).emit('fetch users received', users);
     });
     socket.on('disconnect', function() {
         if (socket_room) {
