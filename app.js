@@ -10,7 +10,7 @@ app.get('/', function(req, res) {
     res.sendFile(__dirname + '/src/views/index.html');
 });
 app.get('/download', function(req, res) {
-    res.send('<a href="http://public-void.org:3000/download/chat-client.apk" download="chat-client.apk">Download chat-client.apk</a>');
+    res.sendFile(__dirname + '/download/chat-client.apk');
 });
 io.on('connection', function(socket) {
     console.log(socket.id);
