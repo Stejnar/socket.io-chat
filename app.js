@@ -9,7 +9,9 @@ app.use(express.static(__dirname + '/src/public'));
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/src/views/index.html');
 });
-
+app.get('/download', function(req, res) {
+    res.sendFile(__dirname + '/download/chat-client.apk');
+});
 io.on('connection', function(socket) {
     console.log(socket.id);
     socket.on('new user', function(name) {
@@ -23,9 +25,14 @@ io.on('connection', function(socket) {
         socket.broadcast.emit('new user', name);
         console.log(name + ' joined the room');
     });
-    socket.on('fetch users request', function(name) {
-        console.log(name + ' is fetching users');
-        socket.emit('fetch users received', users.map(function (user) { return user.name; }));
+    socket.on('fetch users request', function() {
+        var self = users.filter(function (user) { return user.socket.id === socket.id; });
+        var response = users
+            // don't send sockets
+            .map(function (user) { return user.name; })
+            // don't send the user himself
+            .filter(function (user) { return user.name !== self.name; });
+        socket.emit('fetch users received', response);
     });
     socket.on('disconnect', function() {
         for (var i = 0; i < users.length; i++) {
