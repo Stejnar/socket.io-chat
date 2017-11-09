@@ -14,31 +14,33 @@ app.get('/download', function(req, res) {
 });
 io.on('connection', function(socket) {
     console.log(socket.id);
-    socket.on('new user', function(name) {
-        if (name === 'Anonymous') {
-            name += users.length;
+    socket.on('new user', function(user) {
+        if (user.name === 'Anonymous') {
+            user.name += users.length;
         }
         users.push({
             socket: socket,
-            username: name
+            user: user
         });
-        socket.broadcast.emit('new user', name);
-        console.log(name + ' joined the room');
+        socket.broadcast.emit('new user', user);
+        console.log(user.name + ' joined the room');
     });
     socket.on('fetch users request', function() {
-        var self = users.filter(function (user) { return user.socket.id === socket.id; });
+        var self = users.filter(function (user) { return user.socket.id === socket.id; })[0].user;
         var response = users
             // don't send sockets
-            .map(function (user) { return user.name; })
+            .map(function (item) { return item.user; })
             // don't send the user himself
             .filter(function (user) { return user.name !== self.name; });
+        console.log(self.name + ' is fetching users');
+        console.log(response);
         socket.emit('fetch users received', response);
     });
     socket.on('disconnect', function() {
         for (var i = 0; i < users.length; i++) {
             if (socket === users[i].socket) {
-                io.emit('user left', users[i].username);
-                console.log(users[i].username + ' disconnected');
+                io.emit('user left', users[i].user);
+                console.log(users[i].user.name + ' disconnected');
                 users.splice(i, 1);
             }
         }
