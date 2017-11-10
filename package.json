@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src/server.js",
     "server": "webpack-dev-server --content-base src --inline --hot",
-    "compile": "webpack --config webpack.config.js"
+    "compile": "webpack --config webpack.config.js",
+    "pm2": "pm2 start src/server.js"
   },
   "dependencies": {
     "express": "^4.10.2",
