@@ -58,7 +58,10 @@ export default class Chat extends Component {
                                     onChange={this.handleInput.bind(this)}/>
                             </div>
                             <div className='button'>
-                                <button type='submit' onClick={this.sendMessage.bind(this)}>
+                                <button
+                                    type='submit'
+                                    onTouchStart={this.sendMessage.bind(this)}
+                                    onClick={this.sendMessage.bind(this)}>
                                     <img className='icon' src={sendIcon}/>
                                 </button>
                             </div>

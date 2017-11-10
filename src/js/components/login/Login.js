@@ -49,6 +49,7 @@ export default class Login extends React.Component {
                     <button
                         className='navigate'
                         type='submit'
+                        onTouchStart={this.navigate.bind(this)}
                         onClick={this.navigate.bind(this)}>
                         Let's Go
                     </button>
