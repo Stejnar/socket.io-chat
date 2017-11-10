@@ -6,7 +6,7 @@ import logger from "./Logger";
 import {setUser} from "../../../actions/userActions";
 
 const io = require('socket.io-client');
-const uri = 'http://localhost:3000';
+const uri = 'http://public-void.org:3000';
 let socket = null;
 
 export default class SocketIOClient {
