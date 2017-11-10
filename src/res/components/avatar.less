@@ -1,0 +1,29 @@
+@import "../variables";
+
+.avatar-component {
+    display          : block;
+    background-color : darken(@color-foreground, 5%);
+    border           : 1px solid darken(@color-background, 20%);
+    border-radius    : 100%;
+    padding          : 10px;
+    box-shadow       : @click-able-shadow;
+    .icon {
+        padding : 5px;
+        width   : @icon-size-md;
+        height  : @icon-size-md;
+        display : block;
+    }
+}
+
+.select-avatar-component {
+    display : block;
+    padding : 20px;
+    a {
+        cursor     : pointer;
+        margin     : 2px;
+        display    : inline-block !important;
+        box-sizing : border-box;
+        width      : @icon-size-lg;
+        height     : @icon-size-lg;
+    }
+}

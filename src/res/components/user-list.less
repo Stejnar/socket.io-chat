@@ -1,0 +1,28 @@
+@import "../variables";
+
+.user-list-item {
+    display          : block;
+    background-color : @color-foreground;
+    border-bottom    : 1px solid darken(@color-background, 20%);
+    height           : @icon-size-lg;
+    padding          : 10px 10px 10px 20px;
+    & > .avatar-component {
+        display          : inline-block;
+        float            : left;
+        .icon {
+            width  : @icon-size-md;
+            height : @icon-size-md;
+        }
+    }
+    & > .body {
+        display      : inline-block;
+        height       : 100%;
+        padding-left : 20px;
+        span {
+            line-height    : @icon-size-lg;
+            font-size      : 18px;
+            display        : inline-block;
+            vertical-align : middle;
+        }
+    }
+}

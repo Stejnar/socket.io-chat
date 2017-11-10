@@ -1,0 +1,56 @@
+@import "../variables";
+
+.navigation-component {
+    box-sizing       : border-box;
+    display          : block;
+    position         : fixed;
+    top              : 0;
+    left             : 0;
+    right            : 0;
+    height           : @navigation-height;
+    padding          : 5px;
+    background-color : @color-foreground;
+    box-shadow       : @vertical-shadow;
+    border-bottom    : 1px solid darken(@color-foreground, 10%);
+    .back-button {
+        display : inline-block;
+        float   : left;
+    }
+    .title {
+        position    : fixed;
+        top         : 0;
+        left        : 50%;
+        margin-left : -100px;
+        width       : 200px;
+        h2 {
+            text-align  : center;
+            font-weight : normal;
+            line-height : @navigation-height;
+            margin      : 0 auto;
+        }
+    }
+    .right-button {
+        display : inline-block;
+        float   : right;
+    }
+    button {
+        box-sizing       : border-box;
+        cursor           : pointer;
+        border           : none;
+        background-color : transparent;
+        border-radius    : 100%;
+        padding          : 5px;
+        width            : 50px;
+        height           : 50px;
+        &:hover {
+            background-color : darken(@color-foreground, 10%);
+        }
+        &:focus {
+            outline : none;
+        }
+    }
+    img {
+        width      : @icon-size-md;
+        height     : @icon-size-md;
+    }
+}
