@@ -28,8 +28,15 @@ export default class MessageList extends React.Component {
 
     renderItem(message, index) {
         const user = this.getUser(message.from) || { name: null };
+        const fromUser = message.from === this.props.user.name;
         return (
-            <MessageListItem message={message} key={index} user={user}/>
+            <MessageListItem
+                key={index}
+                fromUser={fromUser}
+                avatar={user.avatar}
+                message={message}
+                name={user.name}
+            />
         );
     }
 

@@ -16,8 +16,7 @@ export default class ChatNavigation extends React.Component {
         return (
             <Navigation
                 title='Chat'
-                history={this.props.history}
-                backButton={true}
+                backButton={false}
                 rightButtons={rightButtons}/>
         );
     }

@@ -1,40 +1,71 @@
 @import "../variables";
 
 .login {
-    text-align : center;
-    .name-input {
-        background    : transparent;
-        text-align    : center;
-        padding       : 5px;
-        margin        : 20px 20px 10px;
-        width         : auto;
-        min-width     : 100px;
-        font-size     : 16px;
-        border        : none;
-        border-bottom : 2px solid #999;
-        &:focus {
-            outline      : none;
-            border-color : @color-primary;
+    display         : flex;
+    align-items     : center;
+    text-align      : center;
+    justify-content : center;
+    height          : 100%;
+    width           : 100%;
+    form {
+        align-self   : center;
+        justify-self : center;
+        .name-input {
+            flex-direction : row;
+            background     : transparent;
+            text-align     : center;
+            padding        : 5px;
+            margin         : 20px 20px 10px;
+            width          : auto;
+            min-width      : 100px;
+            font-size      : 16px;
+            border         : none;
+            border-bottom  : 2px solid #999;
+            &:focus {
+                outline      : none;
+                border-color : @color-primary;
+            }
         }
-    }
-    button, a {
-        margin     : 20px auto;
-        display    : block;
-        cursor     : pointer;
-        font-size  : 20px;
-        border     : none;
-        background : transparent;
-    }
-    a {
-        border-radius : 100%;
-        display       : block;
-        width         : @icon-size-lg;
-        height        : @icon-size-lg;
-    }
-    .navigate {
-        color            : @color-foreground;
-        padding          : 10px 20px;
-        background-color : @color-primary;
-        box-shadow       : @click-able-shadow;
+        button, a {
+            flex-direction : row;
+            margin         : 20px auto;
+            display        : block;
+            cursor         : pointer;
+            font-size      : 20px;
+            border         : none;
+            background     : transparent;
+        }
+        a {
+            border-radius : 100%;
+            width         : 114px;
+            height        : 114px;
+            display       : block;
+        }
+        .avatar-component {
+            flex-direction  : row;
+            margin          : auto;
+            width           : 82px;
+            height          : 82px;
+            padding         : 15px;
+            box-sizing      : content-box;
+            align-content   : center;
+            justify-content : center;
+            .icon {
+                margin : 0;
+                width  : @icon-size-lg;
+                height : @icon-size-lg;
+            }
+        }
+        .navigate {
+            color            : @color-foreground;
+            padding          : 10px 20px;
+            background-color : @color-primary;
+            box-shadow       : @click-able-shadow;
+            font-weight      : bolder;
+            border-radius    : 20px;
+            &:focus {
+                outline      : none;
+            }
+        }
     }
 }

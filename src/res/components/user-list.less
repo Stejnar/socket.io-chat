@@ -1,14 +1,20 @@
 @import "../variables";
 
+.user-list {
+    display : block;
+    padding : 20px;
+}
+
 .user-list-item {
     display          : block;
     background-color : @color-foreground;
     border-bottom    : 1px solid darken(@color-background, 20%);
     height           : @icon-size-lg;
     padding          : 10px 10px 10px 20px;
+    overflow-y       : scroll;
     & > .avatar-component {
-        display          : inline-block;
-        float            : left;
+        display : inline-block;
+        float   : left;
         .icon {
             width  : @icon-size-md;
             height : @icon-size-md;

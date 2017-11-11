@@ -10,8 +10,7 @@ export default class MessageListItem extends React.Component {
     }
 
     alignment() {
-
-        if (this.props.message.from === this.props.user.name) {
+        if (this.props.fromUser) {
             return 'right';
         } else if (this.props.message.from === 'server') {
             return 'center';
@@ -24,14 +23,14 @@ export default class MessageListItem extends React.Component {
         if (from !== 'server') {
             return (
                 <div className='avatar'>
-                    <Avatar alias={this.props.user.avatar}/>
+                    <Avatar alias={this.props.avatar}/>
                 </div>
             );
         }
     }
 
     renderFooter(from) {
-        if (this.props.message.from !== 'server') {
+        if (from !== 'server') {
             return (
                 <div className='footer'>
                     <span>{from}, {convertDate(this.props.message.date)}</span>
@@ -41,7 +40,7 @@ export default class MessageListItem extends React.Component {
     }
 
     render() {
-        const from = this.props.message.from === this.props.user.name ? 'You' : this.props.message.from;
+        const from = this.props.fromUser ? 'You' : this.props.message.from;
         return (
             <div className={'message-list-item ' + this.alignment()}>
                 {this.renderAvatar(from)}

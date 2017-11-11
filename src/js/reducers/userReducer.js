@@ -1,7 +1,7 @@
 import {getRandomAvatar} from "../components/avatars/_locations";
 
 export default function userReducer(state = {
-    name: 'John Snow',
+    name: 'Jon Snow',
     avatar: getRandomAvatar().alias
 }, action) {
     switch (action.type) {

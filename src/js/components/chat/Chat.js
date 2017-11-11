@@ -10,6 +10,7 @@ import ChatNavigation from "../navigation/ChatNavigation";
         user: store.user,
         messages: store.messages,
         socket: store.client.socket,
+        window: store.window,
     }
 })
 export default class Chat extends Component {
@@ -46,27 +47,24 @@ export default class Chat extends Component {
     render() {
         const sendIcon = './res/icons/send.png';
         return (
-            <div className='wrapper'>
+            <div className='chat'>
                 <ChatNavigation history={this.props.history}/>
-                <div className='chat'>
-                    <MessageList/>
-                    <div className='footer'>
-                        <form>
-                            <div className='input'>
-                                <input
-                                    placeholder='Send a message...'
-                                    onChange={this.handleInput.bind(this)}/>
-                            </div>
-                            <div className='button'>
-                                <button
-                                    type='submit'
-                                    onTouchStart={this.sendMessage.bind(this)}
-                                    onClick={this.sendMessage.bind(this)}>
-                                    <img className='icon' src={sendIcon}/>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                <MessageList/>
+                <div className='footer'>
+                    <form>
+                        <button
+                            type='submit'
+                            onTouchStart={this.sendMessage.bind(this)}
+                            onClick={this.sendMessage.bind(this)}>
+                            <img className='icon' src={sendIcon}/>
+                        </button>
+                        <div className='input'>
+                            <input
+                                placeholder='Send a message...'
+                                onChange={this.handleInput.bind(this)}
+                                value={this.state.input || ''}/>
+                        </div>
+                    </form>
                 </div>
             </div>
         );

@@ -6,7 +6,7 @@ module.exports = {
     context: path.join(__dirname, "src"),
     devtool: debug ? "inline-sourcemap" : null,
     entry: [
-        "./js/client.js",
+        "./js/layout.js",
         "./res/styles.less"
     ],
     module: {

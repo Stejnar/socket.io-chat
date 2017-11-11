@@ -1,0 +1,75 @@
+@import "../variables";
+
+.grid-child {
+    box-sizing       : border-box;
+    width            : 100%;
+    height           : 100%;
+    background-color : @color-background;
+}
+
+.fixed-stretch-full {
+    position : fixed;
+    top      : 0;
+    bottom   : 0;
+    left     : 0;
+    right    : 0;
+}
+
+.fixed-position-center(@size) {
+    position    : fixed;
+    width       : @size;
+    left        : 50%;
+    margin-left : -@size / 2;
+}
+
+@media (max-width : @screen-sm-max) {
+    .wrapper {
+        .fixed-stretch-full();
+        .content {
+            .grid-child();
+            & > div {
+                .grid-child();
+            }
+        }
+    }
+}
+
+@media (min-width : @screen-md-min) {
+    .wrapper {
+        box-sizing            : border-box;
+        padding               : 20px;
+        display               : grid;
+        grid-template-columns : 2fr 3fr;
+        grid-auto-rows        : 100%;
+        height                : 100%;
+        .fixed-position-center(@screen-md-min);
+        .sidebar {
+            & > div {
+                .grid-child();
+            }
+            height           : 100%;
+            overflow-y       : scroll;
+            overflow         : overlay;
+            box-shadow       : -5px 0 20px rgba(0, 0, 0, 0.2);
+            background-color : @color-background;
+        }
+        .content {
+            height           : 100%;
+            background-color : @color-background;
+            box-shadow       : 5px 0 20px rgba(0, 0, 0, 0.2);
+        }
+    }
+}
+
+::-webkit-scrollbar {
+    width : 0.8em;
+}
+
+::-webkit-scrollbar-track {
+    background : transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background    : rgba(100, 100, 100, 0.2);
+    border-radius : 0.8em;
+}

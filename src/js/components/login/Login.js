@@ -3,23 +3,32 @@ import {connect} from "react-redux";
 
 import {setUser} from "../../actions/userActions";
 import Avatar from "../avatars/Avatar";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
+import SCREEN from "../../constants";
 
 @connect((store) => {
     return {
         socket: store.client.socket,
         user: store.user,
+        window: store.window,
     }
 })
 export default class Login extends React.Component {
-    navigate(event) {
+    constructor(props) {
+        super(props);
+        this.renderAvatar = this.renderAvatar.bind(this);
+        this.renderSubmit = this.renderSubmit.bind(this);
+        this.navigate = this.navigate.bind(this);
+    }
+
+    navigate(event, history) {
         event.preventDefault();
         // broadcast this user
         const send = this.props.socket.emitUser(this.props.user);
         if (send) {
             // navigate
             this.props.socket.fetchUsers();
-            this.props.history.push('/chat');
+            history.push('/chat');
         } else {
             // show error message
         }
@@ -31,28 +40,55 @@ export default class Login extends React.Component {
         this.props.dispatch(setUser({name: event.target.value}));
     }
 
+    renderAvatar() {
+        if (this.props.window.width > SCREEN.MEDIUM.MIN) {
+            return () => (
+                <Avatar alias={this.props.user.avatar}/>
+            );
+        } else {
+            return withRouter(({history}) => (
+                <div>
+                    <h3>Choose an avatar</h3>
+                    <a>
+                        <Avatar
+                            onClick={() => {
+                                history.push('/avatars');
+                            }}
+                            alias={this.props.user.avatar}/>
+                    </a>
+                </div>
+            ));
+        }
+    }
+
+    renderSubmit() {
+        return withRouter(({history}) => (
+            <button
+                className='navigate'
+                type='submit'
+                onTouchStart={(event) => this.navigate(event, history)}
+                onClick={(event) => this.navigate(event, history)}>
+                Let's Go
+            </button>
+        ));
+    }
+
     render() {
+        const Avatar = this.renderAvatar();
+        const Submit = this.renderSubmit();
         return (
             <div className='login'>
                 <form>
+                    <Avatar/>
                     <h3>Enter your name</h3>
                     <input
+                        autoFocus='true'
                         className='name-input'
                         placeholder='Jon Snow'
                         onChange={this.handleInput.bind(this)}
                         value={this.props.user.name}>
                     </input>
-                    <h3>Choose an avatar</h3>
-                    <Link to='/avatars'>
-                        <Avatar alias={this.props.user.avatar}/>
-                    </Link>
-                    <button
-                        className='navigate'
-                        type='submit'
-                        onTouchStart={this.navigate.bind(this)}
-                        onClick={this.navigate.bind(this)}>
-                        Let's Go
-                    </button>
+                    <Submit/>
                 </form>
             </div>
         );
