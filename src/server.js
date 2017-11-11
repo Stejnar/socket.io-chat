@@ -11,11 +11,11 @@ const CHAT_MESSAGE = events.CHAT_MESSAGE;
 
 app.use(express.static(__dirname));
 
+app.get('/download', function (req, res) {
+    res.sendFile(__dirname + '/download/chat-client.apk');
+});
 app.get('*', function (req, res) {
     res.sendFile(__dirname + '/index.html');
-});
-app.get('/download', function (req, res) {
-    res.sendFile(__dirname + '../download/chat-client.apk');
 });
 io.on('connection', function (socket) {
     // console.log(socket.id);

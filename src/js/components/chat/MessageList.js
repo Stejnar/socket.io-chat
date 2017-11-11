@@ -31,6 +31,7 @@ export default class MessageList extends React.Component {
         const fromUser = message.from === this.props.user.name;
         return (
             <MessageListItem
+                id={message.date}
                 key={index}
                 fromUser={fromUser}
                 avatar={user.avatar}

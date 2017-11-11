@@ -1,4 +1,4 @@
 node_modules
 .idea
 /src/client.min.js
-download/
+src/download/
