@@ -50,7 +50,7 @@ const events = {
         }
     },
     DISCONNECT: {
-        name: 'DISCONNECT',
+        name: 'disconnect',
         listener: (io, socket) => {
             for (let i = 0; i < users.length; i++) {
                 if (socket === users[i].socket) {
