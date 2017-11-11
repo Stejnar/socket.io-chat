@@ -48,8 +48,13 @@ export default class Login extends React.Component {
 
     renderSubmit() {
         return withRouter(({history}) => {
+            let touched = false;
             const login = (event) => {
                 event.preventDefault();
+                if (touched || this.props.user.name === '') {
+                    return false;
+                }
+                touched = true;
                 // broadcast this user
                 const send = this.props.socket.emitUser(this.props.user);
                 if (send) {

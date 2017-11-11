@@ -17,23 +17,43 @@ export default class Chat extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            input: null,
+            input: '',
         };
+        this.renderSubmitButton = this.renderSubmitButton.bind(this);
     }
 
-    sendMessage(event) {
-        event.preventDefault();
-        // broadcast message
-        const send = this.props.socket.emitMessage({
-            from: this.props.user.name,
-            message: this.state.input,
-            date: new Date().getTime(),
-        });
-        if (send) {
-            // clear input
-            this.setState({input: ''});
-        } else {
-            // show error message
+    renderSubmitButton() {
+        return () => {
+            let touched = false;
+            const sendIcon = './res/icons/send.png';
+            const sendMessage = (event) => {
+                event.preventDefault();
+                if (touched || this.state.input === '') {
+                    return false;
+                }
+                touched = true;
+                // broadcast message
+                const send = this.props.socket.emitMessage({
+                    from: this.props.user.name,
+                    message: this.state.input,
+                    date: new Date().getTime(),
+                });
+                if (send) {
+                    // clear input
+                    this.setState({input: ''});
+                } else {
+                    // show error message
+                }
+                return false;
+            };
+            return (
+                <button
+                    type='submit'
+                    onTouchStart={sendMessage}
+                    onClick={sendMessage}>
+                    <img className='icon' src={sendIcon}/>
+                </button>
+            );
         }
     }
 
@@ -45,19 +65,14 @@ export default class Chat extends Component {
     }
 
     render() {
-        const sendIcon = './res/icons/send.png';
+        const SubmitButton = this.renderSubmitButton();
         return (
             <div className='chat'>
                 <ChatNavigation history={this.props.history}/>
                 <MessageList/>
                 <div className='footer'>
                     <form>
-                        <button
-                            type='submit'
-                            onTouchStart={this.sendMessage.bind(this)}
-                            onClick={this.sendMessage.bind(this)}>
-                            <img className='icon' src={sendIcon}/>
-                        </button>
+                        <SubmitButton/>
                         <div className='input'>
                             <input
                                 placeholder='Send a message...'
