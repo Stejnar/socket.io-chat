@@ -4,10 +4,10 @@
   "description": "chat web app with socketIO and react",
   "main": "src/js/client.js",
   "scripts": {
-    "start": "node src/server.js",
+    "start": "node src/server/server.js",
     "server": "webpack-dev-server --content-base src --inline --hot",
     "compile": "webpack --config webpack.config.js",
-    "pm2": "pm2 start src/server.js"
+    "pm2": "pm2 start src/server/server.js"
   },
   "dependencies": {
     "express": "^4.10.2",
