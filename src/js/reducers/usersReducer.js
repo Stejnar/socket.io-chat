@@ -7,8 +7,10 @@ export default function usersReducer (state = [], action) {
         case 'REMOVE_USER': {
             return state.filter((user) => { return user.name !== action.payload; });
         }
-        case 'FETCH_USER_RECEIVED': {
-            return action.payload;
+        case 'FETCH_USERS_RECEIVED': {
+            const users = [].concat(action.payload);
+            console.log(users);
+            return users;
         }
     }
     return state;
