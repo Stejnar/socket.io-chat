@@ -18,21 +18,6 @@ export default class Login extends React.Component {
         super(props);
         this.renderAvatar = this.renderAvatar.bind(this);
         this.renderSubmit = this.renderSubmit.bind(this);
-        this.navigate = this.navigate.bind(this);
-    }
-
-    navigate(event, history) {
-        event.preventDefault();
-        // broadcast this user
-        const send = this.props.socket.emitUser(this.props.user);
-        if (send) {
-            // navigate
-            this.props.socket.fetchUsers();
-            history.push('/chat');
-        } else {
-            // show error message
-        }
-        return false;
     }
 
     handleInput(event) {
@@ -62,15 +47,30 @@ export default class Login extends React.Component {
     }
 
     renderSubmit() {
-        return withRouter(({history}) => (
-            <button
-                className='navigate'
-                type='submit'
-                onTouchStart={(event) => this.navigate(event, history)}
-                onClick={(event) => this.navigate(event, history)}>
-                Let's Go
-            </button>
-        ));
+        return withRouter(({history}) => {
+            const login = (event) => {
+                event.preventDefault();
+                // broadcast this user
+                const send = this.props.socket.emitUser(this.props.user);
+                if (send) {
+                    // navigate
+                    this.props.socket.fetchUsers();
+                    history.push('/chat');
+                } else {
+                    // show error message
+                }
+                return false;
+            };
+            return (
+                <button
+                    className='navigate'
+                    type='submit'
+                    onTouchStart={login}
+                    onClick={login}>
+                    Let's Go
+                </button>
+            );
+        });
     }
 
     render() {
