@@ -1,8 +1,9 @@
-var express = require('express');
-var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var users = [];
+const express = require('express');
+const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+
+let users = [];
 
 app.use(express.static(__dirname));
 
@@ -15,8 +16,22 @@ app.get('/download', function (req, res) {
 io.on('connection', function (socket) {
     console.log(socket.id);
     socket.on('new user', function (user) {
-        if (user.name === 'Anonymous') {
-            user.name += users.length;
+        const isNotUnique = (name) => {
+            console.log(users.find((u) => {
+                return u.user.name === name;
+            }));
+            return !!users.find((u) => {
+                return u.user.name === name;
+            });
+        };
+        if (isNotUnique(user.name)) {
+            let name = '' + user.name;
+            let i = 2;
+            while (isNotUnique(name)) {
+                name = user.name + '#' + i;
+                i++;
+            }
+            user.name = name;
         }
         users.push({
             socket: socket,
@@ -26,12 +41,12 @@ io.on('connection', function (socket) {
         console.log(user.name + ' joined the room', user);
     });
     socket.on('fetch users request', function () {
-        var self = users.find(function (user) {
+        let self = users.find(function (user) {
             return user.socket.id === socket.id;
         });
         if (self) {
             self = self.user;
-            var response = users
+            const response = users
                 .map(function (item) { // don't send sockets
                     return item.user;
                 })
@@ -44,7 +59,7 @@ io.on('connection', function (socket) {
         }
     });
     socket.on('disconnect', function () {
-        for (var i = 0; i < users.length; i++) {
+        for (let i = 0; i < users.length; i++) {
             if (socket === users[i].socket) {
                 io.emit('user left', users[i].user);
                 console.log(users[i].user.name + ' disconnected');
