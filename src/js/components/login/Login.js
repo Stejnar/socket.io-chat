@@ -5,6 +5,7 @@ import {setUser} from "../../actions/userActions";
 import Avatar from "../avatars/Avatar";
 import {Link, withRouter} from "react-router-dom";
 import SCREEN from "../../constants";
+import EnableNotifications from "../notifications/EnableNotifications";
 
 @connect((store) => {
     return {
@@ -18,6 +19,7 @@ export default class Login extends React.Component {
         super(props);
         this.renderAvatar = this.renderAvatar.bind(this);
         this.renderSubmit = this.renderSubmit.bind(this);
+        this.renderNotification = this.renderNotification.bind(this);
     }
 
     handleInput(event) {
@@ -25,8 +27,14 @@ export default class Login extends React.Component {
         this.props.dispatch(setUser({name: event.target.value}));
     }
 
+    renderNotification() {
+        if (this.props.window.width >= SCREEN.MEDIUM.MIN) {
+            return () => null;
+        } else return () => <EnableNotifications/>;
+    }
+
     renderAvatar() {
-        if (this.props.window.width > SCREEN.MEDIUM.MIN) {
+        if (this.props.window.width >= SCREEN.MEDIUM.MIN) {
             return () => (
                 <Avatar alias={this.props.user.avatar}/>
             );
@@ -79,10 +87,12 @@ export default class Login extends React.Component {
     }
 
     render() {
+        const Notification = this.renderNotification();
         const Avatar = this.renderAvatar();
         const Submit = this.renderSubmit();
         return (
             <div className='login'>
+                <Notification/>
                 <form>
                     <Avatar/>
                     <h3>Enter your name</h3>

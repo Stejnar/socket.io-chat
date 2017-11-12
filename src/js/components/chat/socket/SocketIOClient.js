@@ -1,9 +1,11 @@
+import {dispatchMessageNotification} from "../../notifications/Notifications";
 import {createMessage} from "../../../actions/messagesActions";
 import {
     addUser, fetchUsersReceived, removeUser, fetchUsersRequest
 } from "../../../actions/usersActions";
 import logger from "./Logger";
 import {setUser} from "../../../actions/userActions";
+import {store} from '../../../store';
 
 const io = require('socket.io-client');
 const uri = 'http://public-void.org:3000';
@@ -20,14 +22,14 @@ export default class SocketIOClient {
     }
     fetchUsers() {
         return this.handleConnection(() => {
-            this.store.dispatch(fetchUsersRequest());
+            store.dispatch(fetchUsersRequest());
             logger(false, 'FETCH_USERS_REQUEST');
             socket.emit('FETCH_USERS_REQUEST');
         });
     }
     emitMessage(message) {
         return this.handleConnection(() => {
-            this.store.dispatch(createMessage(message));
+            store.dispatch(createMessage(message));
             logger(false, 'CHAT_MESSAGE', message);
             socket.emit('CHAT_MESSAGE', message);
         });
@@ -35,7 +37,7 @@ export default class SocketIOClient {
 
     emitUser(user) {
         return this.handleConnection(() => {
-            this.store.dispatch(setUser(user));
+            store.dispatch(setUser(user));
             logger(false, 'NEW_USER', user);
             socket.emit('NEW_USER', user);
         });
@@ -55,23 +57,24 @@ export default class SocketIOClient {
             socket = io.connect(uri, {transports: ['websocket']});
             socket.on('NEW_USER', (user) => {
                 logger(true, 'NEW_USER', user);
-                this.store.dispatch(addUser(user));
+                store.dispatch(addUser(user));
             });
             socket.on('USER_LEFT', (user) => {
                 logger(true, 'USER_LEFT', user);
-                this.store.dispatch(removeUser(user.name));
+                store.dispatch(removeUser(user.name));
             });
             socket.on('CHAT_MESSAGE', (message) => {
                 logger(true, 'CHAT_MESSAGE', message);
-                this.store.dispatch(createMessage(message));
+                dispatchMessageNotification(message);
+                store.dispatch(createMessage(message));
             });
             socket.on('FETCH_USERS_RECEIVED', (users) => {
                logger(true, 'FETCH_USERS_RECEIVED', users);
-               this.store.dispatch(fetchUsersReceived(users));
+               store.dispatch(fetchUsersReceived(users));
             });
             socket.on('NEW_USER_RECEIVED', (user) => {
                 logger(true, 'NEW_USER_RECEIVED', user);
-                this.store.dispatch(setUser(user));
+                store.dispatch(setUser(user));
             });
             return socket.connected;
         }

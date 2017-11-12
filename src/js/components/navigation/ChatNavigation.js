@@ -4,9 +4,8 @@ import Navigation from "./Navigation";
 
 export default class ChatNavigation extends React.Component {
     render() {
-        const usersIcon = './res/icons/users.png';
         const rightButtons = [{
-            template: <img className='icon' src={usersIcon}/>,
+            template: <i className="fa fa-users" aria-hidden="true"/>,
             listener: (event, history) => {
                 event.preventDefault();
                 history.push('/users');

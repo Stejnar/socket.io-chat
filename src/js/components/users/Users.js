@@ -26,7 +26,7 @@ export default class Users extends Component {
     renderTitle() {
         if (this.props.window.width >= SCREEN.MEDIUM.MIN) {
             return () => (
-                <h3 style={{textAlign: 'center'}}>Users</h3>
+                <h3 style={{textAlign: 'center'}}>People</h3>
             );
         }
         return () => { return null; };

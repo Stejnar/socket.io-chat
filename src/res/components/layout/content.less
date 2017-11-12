@@ -1,0 +1,25 @@
+@import "../../variables";
+
+.grid-child {
+    box-sizing       : border-box;
+    width            : 100%;
+    height           : 100%;
+    background-color : @color-background;
+}
+
+@media (max-width : @screen-sm-max) {
+    .wrapper .content {
+        .grid-child();
+        & > div {
+            .grid-child();
+        }
+    }
+}
+
+@media (min-width : @screen-md-min) {
+    .wrapper .content {
+        height           : 100%;
+        background-color : @color-background;
+        box-shadow       : 5px 0 20px rgba(0, 0, 0, 0.2);
+    }
+}

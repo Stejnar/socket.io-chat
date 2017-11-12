@@ -4,3 +4,10 @@ export function setWindow(window) {
         payload: window,
     }
 }
+
+export function setNotifications(permissions) {
+    return {
+        type: 'SET_NOTIFICATIONS',
+        payload: permissions,
+    }
+}

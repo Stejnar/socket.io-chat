@@ -1,0 +1,77 @@
+@import "../variables";
+
+.enable-notification {
+    .enable-notification-mixin();
+    @media (min-width : @screen-md-min) {
+        width : 100%;
+    }
+    @media (max-width : @screen-sm-max) {
+        position   : absolute;
+        top        : 10px;
+        left       : 10px;
+        width      : auto;
+        box-shadow : @click-able-shadow;
+    }
+}
+
+.enable-notification-mixin() {
+    height           : auto;
+    transition       : all 300ms ease-in-out;
+    background-color : fade(@color-primary, 80%);
+    &.hidden {
+        .hidden();
+    }
+    &.shown {
+        .shown();
+    }
+    button {
+        .labeled-button(@icon-size-sm, 16px, 14px);
+    }
+}
+
+.hidden() {
+    max-height : 0;
+    overflow   : hidden;
+}
+
+.shown() {
+    max-height : 500px;
+}
+
+.labeled-button(@icon-size, @title-size, @body-size) {
+    display          : inline-block;
+    padding          : 15px 20px;
+    border           : none;
+    cursor           : pointer;
+    background-color : transparent;
+    i.button-icon {
+        padding          : 20px;
+        border-radius    : 100%;
+        background-color : @color-foreground;
+        color            : fade(@color-primary, 80%);
+        margin-right     : 20px;
+        font-size        : @icon-size;
+    }
+    div {
+        display        : inline-block;
+        vertical-align : middle;
+        text-align     : left;
+        color          : @color-foreground;
+        font-weight    : 600;
+        margin-top     : -15px;
+        &:before {
+            display        : inline-block;
+            content        : '';
+            vertical-align : middle;
+        }
+        span.button-title {
+            font-size   : @title-size;
+            line-height : @title-size * 1.5;
+        }
+        span.button-body {
+            font-size       : @body-size;
+            line-height     : @body-size * 2;
+            text-decoration : underline;
+        }
+    }
+}

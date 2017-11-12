@@ -1,0 +1,56 @@
+@import "../../variables";
+
+.chat {
+    display : grid;
+    height  : 100%;
+    & > .footer {
+        align-self : end;
+        .chat-footer();
+        .input {
+            .footer-message-input();
+        }
+        button {
+            .footer-button();
+        }
+    }
+}
+
+.chat-footer() {
+    display          : block;
+    width            : 100%;
+    height           : @footer-height;
+    box-sizing       : border-box;
+    padding          : 4px;
+    background-color : darken(@color-foreground, 5%);
+}
+
+.footer-button() {
+    display          : block;
+    float            : right;
+    height           : @footer-height;
+    width            : @footer-height;
+    box-sizing       : border-box;
+    padding          : 0;
+    margin-top       : -5px;
+    box-shadow       : @click-able-shadow;
+    background-color : @color-primary;
+    border-radius    : 100%;
+    cursor           : pointer;
+    i {
+        color     : @color-foreground;
+        font-size : @icon-size-sm;
+        margin    : 0 0 0 -4px;
+    }
+}
+
+.footer-message-input() {
+    overflow : hidden;
+    input {
+        display    : block;
+        box-sizing : border-box;
+        width      : 100%;
+        padding    : 10px 5px 0 5px;
+        height     : 40px;
+        font-size  : 16px;
+    }
+}

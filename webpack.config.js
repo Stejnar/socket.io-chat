@@ -6,7 +6,7 @@ module.exports = {
     context: path.join(__dirname, "src"),
     devtool: debug ? "inline-sourcemap" : null,
     entry: [
-        "./js/layout.js",
+        "./js/client.js",
         "./res/styles.less"
     ],
     module: {
@@ -19,12 +19,14 @@ module.exports = {
                     presets: ['react', 'es2015', 'stage-0'],
                     plugins: ['transform-decorators-legacy'],
                 }
-            }, {
+            },
+            {
                 test: /\.less$/,
-                loader: "style!css!autoprefixer!less"
-            }, {
-                test: /\.(png)$/,
-                loader: 'file?name=/res/icons/[name].[ext]'
+                loader: "style-loader!css-loader!less-loader"
+            },
+            {
+                test: /\.(png|eot|svg|ttf|woff|woff2)$/,
+                loader: 'file-loader?name=[name].[ext]&outputPath=res/icons/',
             }
         ]
     },

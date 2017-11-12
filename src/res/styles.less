@@ -1,4 +1,6 @@
 @import "variables";
+@import "font-awesome-4.7.0/css/font-awesome.min.css";
+
 // layout
 html, body {
     margin           : 0;
@@ -25,12 +27,28 @@ input {
     }
 }
 
-@import "components/layout";
+::-webkit-scrollbar {
+    width : 0.8em;
+}
+
+::-webkit-scrollbar-track {
+    background : transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background    : rgba(100, 100, 100, 0.2);
+    border-radius : 0.8em;
+}
+
+@import "components/layout/layout";
+@import "components/layout/content";
+@import "components/layout/sidebar";
+@import "components/chat/avatar";
+@import "components/chat/chat";
+@import "components/chat/message-list";
+@import "components/users/users";
+@import "components/users/user-list";
 @import "components/login";
-@import "components/avatar";
-@import "components/chat";
-@import "components/message-list";
-@import "icons/icons";
-@import "components/users";
-@import "components/user-list";
 @import "components/navigation";
+@import "components/notifications";
+//@import "icons/icons";

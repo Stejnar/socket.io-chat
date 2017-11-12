@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import MessageList from "./MessageList";
 import {connect} from "react-redux";
-import Avatar from "../avatars/Avatar";
-import {Link} from "react-router-dom";
 import ChatNavigation from "../navigation/ChatNavigation";
+import EnableNotifications from "../notifications/EnableNotifications";
+import SCREEN from "../../constants";
 
 @connect((store) => {
     return {
@@ -20,12 +20,18 @@ export default class Chat extends Component {
             input: '',
         };
         this.renderSubmitButton = this.renderSubmitButton.bind(this);
+        this.renderNotification = this.renderNotification.bind(this);
+    }
+
+    renderNotification() {
+        if (this.props.window.width >= SCREEN.MEDIUM.MIN) {
+            return () => null;
+        } else return () => <EnableNotifications/>;
     }
 
     renderSubmitButton() {
         return () => {
             let touched = false;
-            const sendIcon = './res/icons/send.png';
             const sendMessage = (event) => {
                 event.preventDefault();
                 if (touched || this.state.input === '') {
@@ -51,7 +57,7 @@ export default class Chat extends Component {
                     type='submit'
                     onTouchStart={sendMessage}
                     onClick={sendMessage}>
-                    <img className='icon' src={sendIcon}/>
+                    <i className="fa fa-paper-plane" aria-hidden="true"/>
                 </button>
             );
         }
@@ -65,9 +71,11 @@ export default class Chat extends Component {
     }
 
     render() {
+        const Notification = this.renderNotification();
         const SubmitButton = this.renderSubmitButton();
         return (
             <div className='chat'>
+                <Notification/>
                 <ChatNavigation history={this.props.history}/>
                 <MessageList/>
                 <div className='footer'>

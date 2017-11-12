@@ -16,12 +16,11 @@ export default class Navigation extends React.Component {
     }
 
     renderBackButton() {
-        const backIcon = './res/icons/arrow-left2.png';
         if (this.props.backButton) {
             return withRouter(({history}) => (
                 <div className='back-button'>
                     <button onClick={() => { history.goBack(); }}>
-                        <img className='icon' src={backIcon}/>
+                        <i className="fa fa-chevron-left" aria-hidden="true"/>
                     </button>
                 </div>
             ));

@@ -1,0 +1,73 @@
+@import "../../variables";
+
+@message-border-radius : 10px;
+@message-font-size : 18px;
+@footer-font-size : 10px;
+
+.message-list {
+    display    : block;
+    overflow-y : scroll;
+    align-self : stretch;
+}
+
+.message-list-item {
+    display                    : block;
+    background-color           : @color-foreground;
+    border-bottom-left-radius  : @message-border-radius;
+    border-bottom-right-radius : @message-border-radius;
+    box-sizing                 : border-box;
+    box-shadow                 : @click-able-shadow;
+    margin                     : 5px;
+    clear                      : both;
+    &.right {
+        float                  : right;
+        border-top-left-radius : @message-border-radius;
+        & > .avatar {
+            float : right;
+        }
+    }
+    &.center {
+        box-shadow       : none;
+        clear            : both;
+        background-color : transparent;
+        text-align       : center;
+        .message {
+            margin : 0 !important;
+        }
+    }
+    &.left {
+        border-top-right-radius : @message-border-radius;
+        float                   : left;
+        & > .avatar {
+            float : left;
+        }
+    }
+    & > .avatar {
+        display    : inline-block;
+        padding    : 5px;
+        box-sizing : border-box;
+        .avatar-component {
+            padding : 0;
+        }
+        .icon {
+            width  : @icon-size-sm;
+            height : @icon-size-sm;
+        }
+    }
+    & > .body {
+        vertical-align : top;
+        display        : inline-block;
+        height         : 100%;
+        padding        : 10px;
+        box-sizing     : border-box;
+        & > .message {
+            display       : block;
+            margin-bottom : 20px;
+            font-size     : @message-font-size;
+        }
+        & > .footer span {
+            display   : block;
+            font-size : @footer-font-size;
+        }
+    }
+}

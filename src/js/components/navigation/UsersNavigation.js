@@ -6,7 +6,7 @@ export default class UsersNavigation extends React.Component {
     render() {
         return (
             <Navigation
-                title='Users'
+                title='People'
                 history={this.props.history}
                 backButton={true}/>
         );
