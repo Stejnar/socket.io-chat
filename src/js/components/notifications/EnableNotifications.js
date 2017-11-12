@@ -40,7 +40,7 @@ export default class EnableNotifications extends React.Component {
     }
 
     render() {
-        const hidden = this.state.hidden && !this.props.asked ? 'hidden' : 'shown';
+        const hidden = this.state.hidden || !this.props.asked ? 'hidden' : 'shown';
         return (
             <div className={'enable-notification ' + hidden}>
                 <button onClick={() => {
